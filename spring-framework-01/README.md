@@ -1,4 +1,4 @@
 # spring-framework-01
-Демонстрационное приложение по тестированию студентов.
-Сборка: mvn clean install  
-Запуск: java -jar target/spring-framework-01-1.0-SNAPSHOT-jar-with-dependencies.jar  
+Р”РµРјРѕРЅСЃС‚СЂР°С†РёРѕРЅРЅРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ РїРѕ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЋ СЃС‚СѓРґРµРЅС‚РѕРІ. <br /><br />
+РЎР±РѕСЂРєР°: mvn clean install <br />
+Р—Р°РїСѓСЃРє: java -jar target/spring-framework-01-1.0-SNAPSHOT-jar-with-dependencies.jar <br />    
