@@ -5,15 +5,21 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
         
 	<beans>
-		
+
 		<bean id="questionDao" class="ru.otus.exam.dao.QuestionDaoImpl">
-			<property name="path" value="/questions.csv"/>
+			<constructor-arg name="path" value="/questions.csv"/>
 		</bean>
 		
 		<bean id="examService" class="ru.otus.exam.service.ExamServiceImpl">
 			<constructor-arg name="questionDao" ref="questionDao"/>
 			<constructor-arg name="minimumPassRate" value="3"/>
 		</bean>
+		
+		<bean id="starterService" class="ru.otus.exam.service.StarterServiceImpl">
+			<constructor-arg name="examService" ref="examService"/>
+		</bean>
+		
+
 		
 	</beans>        
 </beans>

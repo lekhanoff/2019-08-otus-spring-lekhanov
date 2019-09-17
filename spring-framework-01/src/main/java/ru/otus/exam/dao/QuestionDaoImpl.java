@@ -9,19 +9,13 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import ru.otus.exam.domain.Question;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class QuestionDaoImpl implements QuestionDao{
 
-    private String path;
+    private final String path;
     
     public List<Question> getQuestions() throws IOException {
         InputStream is = this.getClass().getResourceAsStream(path);

@@ -27,16 +27,19 @@ public class ExamServiceTest {
     @Mock
     private QuestionDao questionDao;
 
+    private ExamService examService; 
+    
     @Before
     public void init() throws IOException {
         Mockito.when(questionDao.getQuestions())
                 .thenReturn(
                         Arrays.asList(Question.builder().question("The capital of Bulgaria is").correctAnswer("Sofia").build()));
+        
+        examService = new ExamServiceImpl(questionDao, 1);
     }
     
     @Test
     public void examineSuccessTest() throws IOException {
-        ExamService examService = ExamServiceImpl.builder().minimumPassRate(1).questionDao(questionDao).build();
         
         InputStream input = new ByteArrayInputStream("Sofia".getBytes());
         System.setIn(input);
@@ -49,8 +52,6 @@ public class ExamServiceTest {
     
     @Test
     public void examineFailTest() throws IOException {
-        ExamService examService = ExamServiceImpl.builder().minimumPassRate(1).questionDao(questionDao).build();
-        
         InputStream input = new ByteArrayInputStream("Moscow".getBytes());
         System.setIn(input);
         Scanner scanner = new Scanner(input);
