@@ -9,7 +9,7 @@ public class ExamResult {
     
     private final int minimumPassRate;
 
-    private boolean isPassed;
+    private final boolean isPassed;
     
     public ExamResult(int correctAnswersCount, int minimumPassRate) {
         this.correctAnswersCount = correctAnswersCount;

@@ -1,12 +1,15 @@
 package ru.otus.exam;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Scanner;
 
 import org.junit.Before;
@@ -38,7 +41,7 @@ public class ExamServiceTest {
     public void init() throws IOException {
         Mockito.when(questionDao.getQuestions())
                 .thenReturn(
-                        Arrays.asList(Question.builder().question("test.question01").correctAnswer("test.answer01").build()));
+                        Optional.of(Arrays.asList(Question.builder().question("test.question01").correctAnswer("test.answer01").build())));
         
         Mockito.when(messageSource.getMessage("question.user", null, Locale.getDefault())).thenReturn("Question: ");
         Mockito.when(messageSource.getMessage("answer.user", null, Locale.getDefault())).thenReturn("Enter your answer: ");
@@ -57,7 +60,8 @@ public class ExamServiceTest {
 
         ExamResult examResult = examService.examine(scanner);
         assertEquals(1, examResult.getCorrectAnswersCount());
-        assertEquals(true, examResult.isPassed());
+        assertTrue(examResult.isPassed());
+        assertEquals(1, Mockito.mockingDetails(questionDao).getInvocations().size());
     }
     
     @Test
@@ -68,8 +72,8 @@ public class ExamServiceTest {
         
         ExamResult examResult = examService.examine(scanner);
         assertEquals(0, examResult.getCorrectAnswersCount());
-        assertEquals(false, examResult.isPassed());
-        
+        assertFalse(examResult.isPassed());
+        assertEquals(1, Mockito.mockingDetails(questionDao).getInvocations().size());
     }
     
 }

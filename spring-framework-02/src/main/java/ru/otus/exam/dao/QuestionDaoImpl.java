@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -22,22 +23,20 @@ public class QuestionDaoImpl implements QuestionDao {
         this.path = path;
     }
 
-    public List<Question> getQuestions() throws IOException {
-        InputStream is = this.getClass().getResourceAsStream(path);
-        List<Question> questionList = new ArrayList<>(); 
-        
+    public Optional<List<Question>> getQuestions() throws IOException {
         try(
+                InputStream is = this.getClass().getResourceAsStream(path);
                 InputStreamReader reader = new InputStreamReader(is); 
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.EXCEL.withDelimiter(';'));
         ){
+            List<Question> questionList = new ArrayList<Question>();
             csvParser.getRecords().forEach(record -> questionList.add(Question.builder()
                       .question(record.get(0))
                       .correctAnswer(record.get(1))
                       .build()));
+            return Optional.of(questionList);
         } 
         
-        
-        return questionList;
     }
 
 }
