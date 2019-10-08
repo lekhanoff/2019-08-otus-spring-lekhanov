@@ -1,0 +1,24 @@
+{
+  "groups": [{
+    "name": "application",
+    "type": "ru.otus.exam.config.ApplicationSettings",
+    "sourceType": "ru.otus.exam.config.ApplicationSettings"
+  }],
+  "properties": [
+    {
+      "name": "application.locale",
+      "type": "java.lang.String",
+      "description": "A locale of application"
+    },
+    {
+      "name": "application.questions-path",
+      "type": "java.lang.String",
+      "description": "A path to exam questions"
+    },
+    {
+      "name": "application.minimum-pass-rate",
+      "type": "java.lang.Integer",
+      "description": "Minimum rate to pass exam"
+    }
+  ]
+}

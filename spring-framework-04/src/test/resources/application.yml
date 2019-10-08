@@ -1,0 +1,9 @@
+application:
+  locale: en_US
+  questions-path: /questions.csv
+  minimum-pass-rate: 2
+  
+spring:
+  shell:
+    interactive:
+      enabled: false

@@ -1,0 +1,5 @@
+application:
+  locale: en_US
+  questions-path: /questions.csv
+  minimum-pass-rate: 3
+  
