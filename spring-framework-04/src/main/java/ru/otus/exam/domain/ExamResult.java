@@ -13,20 +13,21 @@ public class ExamResult {
     
     private final int minimumPassRate;
 
-    private final boolean isPassed;
-    
     private final MessageSource messageSource;
     
     public ExamResult(int correctAnswersCount, int minimumPassRate, MessageSource messageSource) {
         this.correctAnswersCount = correctAnswersCount;
         this.minimumPassRate = minimumPassRate;
-        this.isPassed = correctAnswersCount >= minimumPassRate;
         this.messageSource = messageSource;
+    }
+    
+    public boolean isPassed() {
+        return correctAnswersCount >= minimumPassRate;
     }
     
     public String getResultMessage(String studentName) {
         String resultMessage = null;
-        if (isPassed) {
+        if (isPassed()) {
             resultMessage = messageSource.getMessage("congratulation.message",
                     new Object[] { studentName, correctAnswersCount }, Locale.getDefault());
         } else {
@@ -35,6 +36,5 @@ public class ExamResult {
         }
 
         return resultMessage;
-
     }
 }

@@ -25,7 +25,6 @@ import ru.otus.exam.config.ApplicationSettings;
 import ru.otus.exam.dao.QuestionDao;
 import ru.otus.exam.domain.ExamResult;
 import ru.otus.exam.domain.Question;
-import ru.otus.exam.service.ExamService;
 import ru.otus.exam.service.ExamServiceImpl;
 
 @DisplayName("Testing ExamService")
@@ -45,7 +44,7 @@ public class ExamServiceTest {
     @Mock
     private LineReader lineReader;
     
-    private ExamService examService; 
+    private ExamServiceImpl examService; 
     
     @BeforeEach
     public void init() throws IOException {

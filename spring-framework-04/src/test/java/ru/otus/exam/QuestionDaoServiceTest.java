@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import ru.otus.exam.dao.QuestionDao;
+import ru.otus.exam.dao.QuestionDaoImpl;
 import ru.otus.exam.domain.Question;
 
 @DisplayName("Testing QuestionDao with Spring Context")
@@ -20,7 +20,7 @@ import ru.otus.exam.domain.Question;
 public class QuestionDaoServiceTest {
 
     @Autowired
-    private QuestionDao questionDao;
+    private QuestionDaoImpl questionDao;
     
     @DisplayName("Checking that QuestionDao reads questions from file correctly with Spring Context.")
     @Test
