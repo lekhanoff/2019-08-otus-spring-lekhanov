@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+	<book book_id="1000" author_id = "1000" genre_id="1000" title="Война и мир"/>
+	<book book_id="1001" author_id = "1000" genre_id="1000" title="Анна Каренина"/>
+</dataset>

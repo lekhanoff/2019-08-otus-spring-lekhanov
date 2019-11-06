@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+	<genre genre_id = "1000" name = "Русская классика"/>
+	<genre genre_id = "1001" name = "Зарубежная классика"/>
+	<genre genre_id = "1002" name = "Фэнтези"/>
+</dataset>
