@@ -11,5 +11,4 @@ public class OtusLibraryException extends RuntimeException {
     public OtusLibraryException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

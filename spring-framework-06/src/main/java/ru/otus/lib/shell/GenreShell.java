@@ -35,7 +35,6 @@ public class GenreShell {
         return objectMapper.writeValueAsString(genre);
     }
 
-    
     @ShellMethod(value = "Find genre by id", key = {"genre-find-id", "gfi"})
     public String genreFindById() throws IOException {
         return objectMapper.writeValueAsString(genreService.getById().orElse(null));
@@ -56,5 +55,4 @@ public class GenreShell {
     public void deleteGenre() throws IOException {
         genreService.deleteGenre();
     }
-
 }

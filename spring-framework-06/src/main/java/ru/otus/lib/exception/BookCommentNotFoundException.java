@@ -11,5 +11,4 @@ public class BookCommentNotFoundException extends OtusLibraryException {
     public BookCommentNotFoundException(String message) {
         super(message);
     }
-
 }

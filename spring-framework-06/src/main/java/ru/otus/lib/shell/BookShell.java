@@ -62,5 +62,4 @@ public class BookShell {
     public void deleteBook() throws IOException {
         bookService.deleteBook();
     }
-
 }

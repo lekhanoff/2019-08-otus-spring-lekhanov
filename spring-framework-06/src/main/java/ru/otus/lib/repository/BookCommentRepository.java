@@ -19,5 +19,4 @@ public interface BookCommentRepository {
 
     public Optional<BookComment> getByBookAndUser(Long bookId, String userName);
 
-
 }

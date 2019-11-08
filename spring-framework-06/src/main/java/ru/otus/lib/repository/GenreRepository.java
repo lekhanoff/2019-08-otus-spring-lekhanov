@@ -19,5 +19,4 @@ public interface GenreRepository {
 
     public List<Genre> getAll();
 
-
 }

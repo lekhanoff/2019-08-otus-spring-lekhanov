@@ -11,5 +11,4 @@ public class BookNotFoundException extends OtusLibraryException {
     public BookNotFoundException(String message) {
         super(message);
     }
-
 }

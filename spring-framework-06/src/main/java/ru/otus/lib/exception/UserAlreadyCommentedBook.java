@@ -11,6 +11,4 @@ public class UserAlreadyCommentedBook extends OtusLibraryException {
     public UserAlreadyCommentedBook(String message) {
         super(message);
     }
-
-    
 }

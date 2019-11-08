@@ -50,5 +50,4 @@ public class AuthorShell {
     public void deleteAuthor() throws IOException {
         authorService.deleteAuthor();
     }
-
 }

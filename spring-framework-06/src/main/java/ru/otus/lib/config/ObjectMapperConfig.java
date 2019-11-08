@@ -16,4 +16,5 @@ public class ObjectMapperConfig {
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         mapper.setSerializationInclusion(Include.NON_NULL);
         return mapper;
-    }}
+    }
+}

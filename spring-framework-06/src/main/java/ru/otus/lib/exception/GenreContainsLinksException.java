@@ -7,7 +7,4 @@ public class GenreContainsLinksException extends OtusLibraryException{
     public GenreContainsLinksException(String message) {
         super(message);
     }
-    
-    
-
 }

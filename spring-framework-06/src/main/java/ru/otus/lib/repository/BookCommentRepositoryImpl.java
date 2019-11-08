@@ -48,7 +48,6 @@ public class BookCommentRepositoryImpl implements BookCommentRepository{
         TypedQuery<BookComment> query = em.createQuery("select c from BookComment c where c.book.bookId = :bookId and c.userLogin = :userName", BookComment.class);
         query.setParameter("bookId", bookId);
         query.setParameter("userName", userName);
-        
         return query.getResultStream().findFirst();
     }
     

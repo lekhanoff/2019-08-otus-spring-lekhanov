@@ -95,7 +95,7 @@ public class BookCommentServiceImpl implements BookCommentService {
     }
 
     @Override
-    public List<BookComment> getBookCommentsByBookId() {
+    public List<BookComment> getByBookId() {
         Long bookId = Long.valueOf(reader.readLine(messageSource.getMessage("bookComment.enter.book-id", null, Locale.getDefault())));
         return bookCommentDao.getCommentsByBookId(bookId);
     }

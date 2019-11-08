@@ -7,7 +7,4 @@ public class AuthorContainsLinksException extends OtusLibraryException{
     public AuthorContainsLinksException(String message) {
         super(message);
     }
-    
-    
-
 }

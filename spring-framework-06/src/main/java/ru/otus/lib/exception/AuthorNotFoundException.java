@@ -11,5 +11,4 @@ public class AuthorNotFoundException extends OtusLibraryException {
     public AuthorNotFoundException(String message) {
         super(message);
     }
-
 }

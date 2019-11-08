@@ -15,7 +15,7 @@ public interface BookCommentService {
     
     public Optional<BookComment> getById();
 
-    public List<BookComment> getBookCommentsByBookId();
+    public List<BookComment> getByBookId();
 
     public boolean checkBookCommentExists(Long genreId);
 }

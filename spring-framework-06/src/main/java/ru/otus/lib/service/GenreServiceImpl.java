@@ -93,5 +93,4 @@ public class GenreServiceImpl implements GenreService {
             throw new GenreNotFoundException(messageSource.getMessage("genre.not-found", new Object[] {genreId}, Locale.getDefault()), e);
         }
     }
-
 }

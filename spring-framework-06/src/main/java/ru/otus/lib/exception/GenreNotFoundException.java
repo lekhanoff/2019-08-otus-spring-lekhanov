@@ -11,5 +11,4 @@ public class GenreNotFoundException extends OtusLibraryException {
     public GenreNotFoundException(String message) {
         super(message);
     }
-
 }

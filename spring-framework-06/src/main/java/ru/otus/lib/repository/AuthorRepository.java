@@ -16,5 +16,4 @@ public interface AuthorRepository {
     public Optional<Author> getById(Long authorId);
 
     public List<Author> getAll();
-
 }

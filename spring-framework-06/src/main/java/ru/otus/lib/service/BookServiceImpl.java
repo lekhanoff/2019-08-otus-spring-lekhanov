@@ -124,7 +124,6 @@ public class BookServiceImpl implements BookService {
         return bookDao.getBooksByGenreId(genreId);
     }
 
-
     @Override
     public boolean checkBookExists(Long bookId) {
         try {
@@ -134,6 +133,4 @@ public class BookServiceImpl implements BookService {
             throw new BookNotFoundException(reader.readLine(messageSource.getMessage("book.not-found", new Object[] {bookId}, Locale.getDefault())), e);
         }
     }
-    
-
 }

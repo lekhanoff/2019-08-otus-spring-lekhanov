@@ -183,7 +183,7 @@ public class BookCommentServiceTest {
         Mockito.when(lineReader.readLine(enterBookIdMessage)).thenReturn(bookId);
         Mockito.when(bookCommentRepo.getCommentsByBookId(Long.valueOf(bookId))).thenReturn(Arrays.asList(testComment1, testComment2));
         
-        List<BookComment> bookCommentList = bookCommentService.getBookCommentsByBookId();
+        List<BookComment> bookCommentList = bookCommentService.getByBookId();
         assertThat(bookCommentList).hasSize(2).containsExactly(testComment1, testComment2);
         
         assertEquals(1, Mockito.mockingDetails(messageSource).getInvocations().size());

@@ -113,5 +113,4 @@ public class BookCommentRepositoryTest {
         assertThat(bookCommentList).hasSize(2).containsExactly(testComment1, testComment2);
     }
 
-
 }
