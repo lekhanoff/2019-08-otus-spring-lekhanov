@@ -48,5 +48,4 @@ public class AuthorRepositoryImpl implements AuthorRepository {
         TypedQuery<Author> query = em.createQuery("select a from Author a order by a.authorId asc", Author.class);
         return query.getResultList();
     }
-
 }
