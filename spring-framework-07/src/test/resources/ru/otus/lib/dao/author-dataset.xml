@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+	<author author_id = "1000" lastname = "Толстой" firstname="Лев" middlename="Николаевич"/>
+	<author author_id = "1001" lastname = "Достоевский" firstname="Федор" middlename="Михайлович"/>
+</dataset>
