@@ -7,18 +7,18 @@ import ru.otus.lib.domain.Author;
 
 public interface AuthorService {
 
-    public Author createAuthor();
+    Author createAuthor();
 
-    public Author updateAuthor();
+    Author updateAuthor();
     
-    public void deleteAuthor();
+    void deleteAuthor();
     
-    public Optional<Author> getById();
+    Optional<Author> getById();
 
-    public Optional<Author> getById(Long authorId);
+    Optional<Author> getById(Long authorId);
 
-    public List<Author> getAll();
+    List<Author> getAll();
     
-    public boolean checkAuthorExists(Long authorId);
+    boolean checkAuthorExists(Long authorId);
 
 }

@@ -13,7 +13,7 @@ import ru.otus.lib.domain.Book;
 import ru.otus.lib.domain.BookComment;
 import ru.otus.lib.exception.BookCommentNotFoundException;
 import ru.otus.lib.exception.BookNotFoundException;
-import ru.otus.lib.exception.UserAlreadyCommentedBook;
+import ru.otus.lib.exception.UserAlreadyCommentedBookException;
 import ru.otus.lib.repository.BookCommentRepository;
 
 @Service
@@ -44,7 +44,7 @@ public class BookCommentServiceImpl implements BookCommentService {
         String userName = reader.readLine(messageSource.getMessage("bookComment.enter.user-name", null, Locale.getDefault()));
         Optional<BookComment> bookComment = bookCommentDao.findByBookBookIdAndUserLogin(book.getBookId(), userName);
         if(bookComment.isPresent()) {
-            throw new UserAlreadyCommentedBook(messageSource.getMessage("bookComment.user-already-commented-book", new Object[] {userName, book.getTitle()}, Locale.getDefault())); 
+            throw new UserAlreadyCommentedBookException(messageSource.getMessage("bookComment.user-already-commented-book", new Object[] {userName, book.getTitle()}, Locale.getDefault())); 
         }
         
         String userComment = reader.readLine(messageSource.getMessage("bookComment.enter.user-comment", null, Locale.getDefault()));
@@ -68,7 +68,7 @@ public class BookCommentServiceImpl implements BookCommentService {
         String userName = reader.readLine(messageSource.getMessage("bookComment.enter.user-name", null, Locale.getDefault()));
         Optional<BookComment> bookComment = bookCommentDao.findByBookBookIdAndUserLogin(book.getBookId(), userName);
         if(bookComment.isPresent() && !bookComment.get().getBook().getBookId().equals(bookId)) {
-            throw new UserAlreadyCommentedBook(messageSource.getMessage("bookComment.user-already-commented-book", new Object[] {userName, book.getTitle()}, Locale.getDefault())); 
+            throw new UserAlreadyCommentedBookException(messageSource.getMessage("bookComment.user-already-commented-book", new Object[] {userName, book.getTitle()}, Locale.getDefault())); 
         }
         String userComment = reader.readLine(messageSource.getMessage("bookComment.enter.user-comment", null, Locale.getDefault()));
         

@@ -8,6 +8,6 @@ import ru.otus.lib.domain.Genre;
 
 public interface GenreRepository extends JpaRepository<Genre, Long>{
 
-    public Optional<Genre> findByName(String name);
+    Optional<Genre> findByName(String name);
 
 }

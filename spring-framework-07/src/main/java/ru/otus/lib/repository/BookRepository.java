@@ -10,8 +10,8 @@ import ru.otus.lib.domain.Book;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long>{
 
-    public List<Book> findByAuthorAuthorId(Long authorId);
+    List<Book> findByAuthorAuthorId(Long authorId);
 
-    public List<Book> findByGenreGenreId(Long genreId);
+    List<Book> findByGenreGenreId(Long genreId);
 
 }

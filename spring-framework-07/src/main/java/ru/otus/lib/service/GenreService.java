@@ -7,19 +7,19 @@ import ru.otus.lib.domain.Genre;
 
 public interface GenreService {
 
-    public Genre createGenre();
+    Genre createGenre();
 
-    public Genre updateGenre();
+    Genre updateGenre();
     
-    public void deleteGenre();
+    void deleteGenre();
     
-    public Optional<Genre> getById();
+    Optional<Genre> getById();
 
-    public Optional<Genre> getById(Long genreId);
+    Optional<Genre> getById(Long genreId);
 
-    public Optional<Genre> getByName();
+    Optional<Genre> getByName();
 
-    public List<Genre> getAll();
+    List<Genre> getAll();
 
-    public boolean checkGenreExists(Long genreId);
+    boolean checkGenreExists(Long genreId);
 }

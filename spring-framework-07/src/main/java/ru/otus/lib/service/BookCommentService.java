@@ -7,15 +7,15 @@ import ru.otus.lib.domain.BookComment;
 
 public interface BookCommentService {
 
-    public BookComment createBookComment();
+    BookComment createBookComment();
 
-    public BookComment updateBookComment();
+    BookComment updateBookComment();
     
-    public void deleteBookComment();
+    void deleteBookComment();
     
-    public Optional<BookComment> getById();
+    Optional<BookComment> getById();
 
-    public List<BookComment> getByBookId();
+    List<BookComment> getByBookId();
 
-    public boolean checkBookCommentExists(Long genreId);
+    boolean checkBookCommentExists(Long genreId);
 }

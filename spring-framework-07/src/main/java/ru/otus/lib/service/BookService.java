@@ -7,26 +7,26 @@ import ru.otus.lib.domain.Book;
 
 public interface BookService {
 
-    public Book createBook();
+    Book createBook();
 
-    public Book updateBook();
+    Book updateBook();
     
-    public void deleteBook();
+    void deleteBook();
     
-    public Optional<Book> getById();
+    Optional<Book> getById();
 
-    public Optional<Book> getById(Long bookId);
+    Optional<Book> getById(Long bookId);
 
-    public List<Book> getAll();
+    List<Book> getAll();
 
-    public List<Book> getBooksByAuthorId();
+    List<Book> getBooksByAuthorId();
 
-    public List<Book> getBooksByAuthorId(Long authorId);
+    List<Book> getBooksByAuthorId(Long authorId);
 
-    public List<Book> getBooksByGenreId();
+    List<Book> getBooksByGenreId();
     
-    public List<Book> getBooksByGenreId(Long genreId);
+    List<Book> getBooksByGenreId(Long genreId);
 
-    public boolean checkBookExists(Long bookId);
+    boolean checkBookExists(Long bookId);
 
 }

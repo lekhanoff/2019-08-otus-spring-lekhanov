@@ -11,8 +11,8 @@ import ru.otus.lib.domain.BookComment;
 @Repository
 public interface BookCommentRepository extends JpaRepository<BookComment, Long>{
 
-    public List<BookComment> findByBookBookId(Long bookId);
+    List<BookComment> findByBookBookId(Long bookId);
 
-    public Optional<BookComment> findByBookBookIdAndUserLogin(Long bookId, String userLogin);
+    Optional<BookComment> findByBookBookIdAndUserLogin(Long bookId, String userLogin);
 
 }
