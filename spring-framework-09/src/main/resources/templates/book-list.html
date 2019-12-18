@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="#{book.list.page.title}">List of all books</title>
+<style type="text/css">
+body {
+	padding: 50px;
+}
+
+.books, .books td {
+	border: 1px solid lightgray;
+	padding: 5px;
+}
+
+input[type=text] {
+  width: 50%;
+}
+
+
+</style>
+</head>
+
+<body>
+	<h1 th:text="#{book.list.table.title}">Books</h1>
+
+	<div class="container">
+		<div id="search">
+			<form class="search-form" th:action="@{/book-search}"
+				action="book-list.html" method="get">
+				<input id="search" type="text" name="search" th:value="${search}" />
+				<input type="submit" th:value="#{book.list.search}" value="Search" />
+			</form>
+		</div>
+		<div id="table">
+			<table class="books" border="1">
+				<thead>
+					<tr>
+						<th id="books.column.id" th:text="#{book.list.column.id}">ID</th>
+						<th id="books.column.author" th:text="#{book.list.column.author}">Author</th>
+						<th id="books.column.name" th:text="#{book.list.column.name}">Name</th>
+						<th id="books.column.genre" th:text="#{book.list.column.genre}">Genre</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="book :${books}">
+						<td th:text="${book.id}">1</td>
+						<td
+							th:text="${book.author.lastname} + ' ' +  ${book.author.firstname} + ' ' + ${book.author.middlename}">Tolstoy
+							Leo Nikolaevich</td>
+						<td th:text="${book.title}">War and peace</td>
+						<td th:text="${book.genre.name}">Russian classic</td>
+						<td><a th:href="@{/book-create}" href="book-create.html"
+							th:text="#{book.list.add}">Create</a></td>
+						<td><a th:href="@{/book-edit(id=${book.id})}"
+							href="book-edit.html" th:text="#{book.list.edit}">Edit</a></td>
+						<td><a th:href="@{/book-delete(id=${book.id})}"
+							href="book-delete.html" th:text="#{book.list.delete}">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

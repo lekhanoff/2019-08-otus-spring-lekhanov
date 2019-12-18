@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="#{author.list.page.title}">List of all authors</title>
+ <style type="text/css">
+        body {
+            padding: 50px;
+        }
+        .authors, .authors td {
+            border: 1px solid lightgray;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+	<h1 th:text="#{author.list.table.title}">Authors</h1>
+
+	<table class="authors" border="1">
+		<thead>
+			<tr>
+				<th id="author.column.id" th:text="#{author.list.column.id}">ID</th>
+				<th id="author.column.lastname" th:text="#{author.list.column.lastname}">Lastname</th>
+				<th id="author.column.firstname" th:text="#{author.list.column.firstname}">Firstname</th>
+				<th id="author.column.middlename" th:text="#{author.list.column.middlename}">Middlename</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="author : ${authors}">
+				<td th:text="${author.id}">1</td>
+				<td th:text="${author.lastname}">Pushkin</td>
+				<td th:text="${author.firstname}">Alexander</td>
+				<td th:text="${author.middlename}">Sergeyevich</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
