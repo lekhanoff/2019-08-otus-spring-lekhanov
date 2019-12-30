@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Список книг</title>
+<style type="text/css">
+body {
+	padding: 50px;
+}
+
+.books, .books td {
+	border: 1px solid lightgray;
+	padding: 5px;
+}
+
+input[type=text] {
+	width: 50%;
+}
+</style>
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<h1>Книги</h1>
+	<div class="container">
+		<div id="search">
+			<input id="bookSearchInput" type="text" />
+		</div>
+		<div id="table">
+			<table class="books" border="1">
+				<thead>
+					<tr>
+						<th id="books.column.id">ID</th>
+						<th id="books.column.author">Автор</th>
+						<th id="books.column.name">Название</th>
+						<th id="books.column.genre">Жанр</th>
+					</tr>
+				</thead>
+				<tbody id="booksTableBody">
+				</tbody>
+			</table>
+		</div>
+		<div>
+			<button id="returnButton">Назад</button>
+		</div>
+	</div>
+	<script>
+		    $(function () {
+		        $.get('/v1/books').done(function (books) {
+		            books.forEach(function (book) {
+		                $('tbody').append(`
+		                    <tr>
+		                        <td>${book.id}</td>
+		                        <td>${book.author.lastname} ${book.author.firstname} ${book.author.middlename}</td>
+		                        <td>${book.title}</td>
+		                        <td>${book.genre.name}</td>
+		                        <td><a href="/book-create.html">Добавить</a></td>
+		                        <td><a href="/book-edit.html?id=${book.id}&genre-id=${book.genre.id}&author-id=${book.author.id}">Изменить</a></td>
+		                        <td><a href="/book-delete.html?id=${book.id}">Удалить</a></td>
+		                    </tr>
+		                `)
+		            });
+		        })
+		    });
+		    $(document).ready(function(){
+		        $("#bookSearchInput").on("keyup", function() {
+		          var value = $(this).val().toLowerCase();
+		          $("#booksTableBody tr").filter(function() {
+		            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		          });
+		        });
+		      });
+		    $("#returnButton").click(function() {
+		        var url = "/index.html";    
+		        $(location).attr('href',url);    
+		    });    
+	</script>
+</body>
+</html>
