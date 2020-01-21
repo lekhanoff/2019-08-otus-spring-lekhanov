@@ -90,6 +90,7 @@ input, select {
 	    event.preventDefault();
 	    var data = {}
 		data["title"] = $("#title-input").val();
+	    data["id"] = $("#id-input").val();
 	    var genre = {}
 	    genre["id"] = $("#genre-input option:selected").val();
 	    data["genre"] = genre;
@@ -97,11 +98,9 @@ input, select {
 	    author["id"] = $("#author-input option:selected").val();
 	    data["author"] = author;
 	    
-	    var id = $("#id-input").val();
-	    
 	    $.ajax({
-	        url: '/v1/books/' + id,
-	        type: 'PUT',
+	        url: '/v1/books',
+	        type: 'POST',
 	        contentType: "application/json",
 	        data: JSON.stringify(data),
 	        dataType: 'json',

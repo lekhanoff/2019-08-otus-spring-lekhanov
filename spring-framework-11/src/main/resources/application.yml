@@ -1,0 +1,14 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: reactivelib
+  jackson:
+    serialization:
+      indent-output: true
+  messages:
+    basename: i18n.bundle
+server:
+  error:
+    include-stacktrace: always
