@@ -30,8 +30,4 @@ public class Genre {
     @JsonIgnore
     @DBRef
     private Set<Book> books;
-    
-//    public static Genre fromDto(GenreDto genre) {
-//        return Genre.builder().id(genre.getId()).name(genre.getName()).build();
-//    }
 }

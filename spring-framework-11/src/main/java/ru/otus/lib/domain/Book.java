@@ -27,14 +27,5 @@ public class Book {
     private Author author;
     
     @DBRef
-    private Genre genre;
-    
-//    public static Book fromDto(BookDto book) {
-//        return Book.builder()
-//                .id(book.getId())
-//                .title(book.getTitle())
-//                .author(Author.fromDto(book.getAuthor()))
-//                .genre(Genre.fromDto(book.getGenre()))
-//                .build();
-//    }    
+    private Genre genre; 
 }

@@ -38,13 +38,4 @@ public class Author {
     @EqualsAndHashCode.Exclude
     @DBRef
     private Set<Book> books;
-    
-//    public static Author fromDto(AuthorDto author) {
-//        return Author.builder()
-//                .id(author.getId())
-//                .lastname(author.getLastname())
-//                .firstname(author.getFirstname())
-//                .middlename(author.getMiddlename())
-//                .build();
-//    }
 }
