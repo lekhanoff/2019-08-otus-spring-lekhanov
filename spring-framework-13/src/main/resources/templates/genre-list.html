@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="#{genre.list.page.title}">List of all genres</title>
+<style type="text/css">
+body {
+	padding: 50px;
+}
+
+.genres, .genres td {
+	border: 1px solid lightgray;
+	padding: 5px;
+}
+</style>
+</head>
+
+<body>
+
+	<h1 th:text="#{genre.list.table.title}">Genres</h1>
+
+	<table class="genres" border="1">
+		<thead>
+			<tr>
+				<th id="genres.column.id" th:text="#{genre.list.column.id}">ID</th>
+				<th id="genres.column.name" th:text="#{genre.list.column.name}">Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="genre : ${genres}">
+				<td th:text="${genre.id}">1</td>
+				<td th:text="${genre.name}">Russian classic</td>
+			</tr>
+		</tbody>
+	</table>
+	<button id="returnButton" th:text="#{button.back}" th:onclick="window.location.href='/welcome'">Back</button>
+</body>
+</html>

@@ -1,0 +1,5 @@
+userid;username;password;isenabled
+1;admin;$2a$10$8R/UxQ/K/IgX0jeTQQnaqeoes18cRFwa6z4FsKr4daLsav/roPsmm;true
+2;user1;$2a$10$8R/UxQ/K/IgX0jeTQQnaqeoes18cRFwa6z4FsKr4daLsav/roPsmm;true
+3;user2;$2a$10$8R/UxQ/K/IgX0jeTQQnaqeoes18cRFwa6z4FsKr4daLsav/roPsmm;true
+4;user3;$2a$10$8R/UxQ/K/IgX0jeTQQnaqeoes18cRFwa6z4FsKr4daLsav/roPsmm;true
