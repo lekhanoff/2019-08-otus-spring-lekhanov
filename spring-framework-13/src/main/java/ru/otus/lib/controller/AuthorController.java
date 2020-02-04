@@ -2,7 +2,6 @@ package ru.otus.lib.controller;
 
 import java.util.List;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ public class AuthorController {
 
     private final AuthorService authorService;
     
-    @PreAuthorize("hasAnyAuthority('USER, ADMIN')")
     @GetMapping("/authors")
     public String findAllAuthors(Model model) {
         List<Author> genreList = authorService.getAll();
