@@ -1,0 +1,28 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: migrationdb
+      
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    
+  jackson:
+    serialization:
+      indent-output: true
+    
+  liquibase:
+    change-log: classpath:liquibase/rootChangeLog.xml
+  
+  messages:
+    basename: i18n.bundle
+  
+  batch:
+    job:      enabled: false
+server:
+  error:
+    include-stacktrace: always
