@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password: 
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+  liquibase:
+    change-log: classpath:liquibase/rootChangeLog.xml
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  messages:
+    basename: i18n.bundle
+  shell:
+    interactive:
+      enabled: false          

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	
+
+	<changeSet id="1.0.1.01-createAuthorTableSequence" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<sequenceExists sequenceName="author_author_id_seq"/>
+			</not>
+		</preConditions>
+		
+		<createSequence sequenceName="author_author_id_seq" incrementBy="1" startValue="1000"/>
+
+		<comment>Creation of author_author_id_seq sequence</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.1.02-createAuthorTable" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="author"/>
+			</not>
+		</preConditions>
+		
+		<createTable tableName="author">
+			<column name="author_id" type="NUMERIC(19,0)" autoIncrement="true" defaultValueSequenceNext="author_author_id_seq">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="lastname" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="firstname" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="middlename" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+		
+		<comment>Creation of author table</comment>
+	</changeSet>
+
+	<changeSet id="1.0.1.03-createAuthorTableIndex01" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<indexExists tableName="author" indexName="k01_author"/>
+			</not>
+		</preConditions>
+		
+		<createIndex tableName="author" indexName="k01_author" unique="false">
+			<column name="lastname"/>
+			<column name="firstname"/>
+			<column name="middlename"/>
+		</createIndex>
+		
+		<comment>Creation of author index</comment>
+	</changeSet>
+
+	<changeSet id="1.0.1.02-load-authors" author="dlekhanov" context="update" runInTransaction="false">
+		<loadData encoding="UTF-8" file="liquibase/data/authors.csv" tableName="author" separator=";">
+			<column name="author_id" type="NUMERIC"/>
+			<column name="lastname" type="STRING"/>
+			<column name="firstname" type="STRING"/>
+			<column name="middlename" type="STRING"/>
+		</loadData>
+		<comment>Load data into authors table</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.1.04-createGenreTableSequence" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<sequenceExists sequenceName="genre_genre_id_seq"/>
+			</not>
+		</preConditions>
+		
+		<createSequence sequenceName="genre_genre_id_seq" incrementBy="1" startValue="1000"/>
+
+		<comment>Creation of genre_genre_id_seq sequence</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.1.05-createGenreTable" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="genre"/>
+			</not>
+		</preConditions>
+		
+		<createTable tableName="genre">
+			<column name="genre_id" type="NUMERIC(19,0)" autoIncrement="true" defaultValueSequenceNext="genre_genre_id_seq">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+		<comment>Creation of genre table</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.1.06-createGenreTableIndex01" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<indexExists tableName="genre" indexName="k01_genre"/>
+			</not>
+		</preConditions>
+		
+		<createIndex tableName="genre" indexName="k01_genre" unique="true">
+			<column name="name"/>
+		</createIndex>
+		
+		<comment>Creation of genre index</comment>
+	</changeSet>	
+	
+	<changeSet id="1.0.1.06-load-genres" author="dlekhanov" context="update" runInTransaction="false">
+		<loadData encoding="UTF-8" file="liquibase/data/genres.csv" tableName="genre" separator=";">
+			<column name="genre_id" type="NUMERIC"/>
+			<column name="name" type="STRING"/>
+		</loadData>
+		<comment>Load data into genres table</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.1.07-createBookTableSequence" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<sequenceExists sequenceName="book_book_id_seq"/>
+			</not>
+		</preConditions>
+		
+		<createSequence sequenceName="book_book_id_seq" incrementBy="1" startValue="1000"/>
+
+		<comment>Creation of book_book_id_seq sequence</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.1.08-createBookTable" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="book"/>
+			</not>
+		</preConditions>
+		
+		<createTable tableName="book">
+			<column name="book_id" type="NUMERIC(19,0)" autoIncrement="true" defaultValueSequenceNext="book_book_id_seq">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="title" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="author_id" type="NUMERIC(19,0)">
+				<constraints nullable="false" />
+			</column>
+			<column name="genre_id" type="NUMERIC(19,0)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+		<comment>Creation of book table</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.1.09-createBookTableIndex01" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<indexExists tableName="book" indexName="k01_book"/>
+			</not>
+		</preConditions>
+		
+		<createIndex tableName="book" indexName="k01_book" unique="true">
+			<column name="title"/>
+			<column name="author_id"/>
+		</createIndex>
+		
+		<comment>Creation of k01_book index</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.1.10-createBookTableIndex02" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<indexExists tableName="book" indexName="k02_book"/>
+			</not>
+		</preConditions>
+		
+		<createIndex tableName="book" indexName="k02_book" unique="false">
+			<column name="genre_id"/>
+		</createIndex>
+		
+		<comment>Creation of k02_book index</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.1.10-load-books" author="dlekhanov" context="update" runInTransaction="false">
+		<loadData encoding="UTF-8" file="liquibase/data/books.csv" tableName="book" separator=";">
+			<column name="book_id" type="NUMERIC"/>
+			<column name="title" type="STRING"/>
+			<column name="author_id" type="NUMERIC"/>
+			<column name="genre_id" type="NUMERIC"/>
+		</loadData>
+		<comment>Load data into books table</comment>
+	</changeSet>
+
+	<changeSet id="1.0.1.11-createUserTable" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="auth_user"/>
+			</not>
+		</preConditions>
+
+		<createSequence sequenceName="auth_user_userid_seq" incrementBy="1" startValue="1000"/>
+		
+		<createTable tableName="auth_user">
+			<column name="userid" type="NUMERIC(19, 0)" autoIncrement="true" defaultValueSequenceNext="auth_user_userid_seq">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="username" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="password" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="isenabled" type="BOOLEAN">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<createIndex tableName="auth_user" indexName="k01_user" unique="true">
+			<column name="username"/>
+		</createIndex>
+		<createIndex tableName="auth_user" indexName="k02_user" unique="false">
+			<column name="isenabled"/>
+		</createIndex>
+		
+	    <loadData encoding="UTF-8" file="liquibase/data/data_users.csv" tableName="auth_user" separator=";">
+			<column name="userid" type="numeric"/>
+			<column name="username" type="string"/>
+			<column name="password" type="string"/>
+			<column name="isenabled" type="boolean"/>
+		</loadData>
+		
+		<comment>Creation of auth_user table</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.1.12-createRoleTable" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="auth_role"/>
+			</not>
+		</preConditions>
+		
+		<createSequence sequenceName="auth_role_roleid_seq" incrementBy="1" startValue="1000"/>
+		
+		<createTable tableName="auth_role">
+			<column name="roleid" type="NUMERIC(19, 0)" autoIncrement="true" defaultValueSequenceNext="auth_role_roleid_seq">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="sysname" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+	    <loadData encoding="UTF-8" file="liquibase/data/data_roles.csv" tableName="auth_role" separator=";">
+			<column name="roleid" type="numeric"/>
+			<column name="sysname" type="string"/>
+		</loadData>
+		
+		<createIndex tableName="auth_role" indexName="k01_role" unique="true">
+			<column name="sysname"/>
+		</createIndex>
+		
+		<comment>Creation of auth_role table</comment>
+	</changeSet>
+
+	<changeSet id="1.0.1.13-createUserRoleTable" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="auth_userrole"/>
+			</not>
+		</preConditions>
+
+		<createSequence sequenceName="auth_userrole_userroleid_seq" incrementBy="1" startValue="1000"/>
+
+		<createTable tableName="auth_userrole">
+			<column name="userroleid" type="NUMERIC(19, 0)" autoIncrement="true" defaultValueSequenceNext="auth_userrole_userroleid_seq">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="userid" type="NUMERIC(19, 0)">
+				<constraints nullable="false" />
+			</column>
+			<column name="roleid" type="NUMERIC(19, 0)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+	    <loadData encoding="UTF-8" file="liquibase/data/data_userroles.csv" tableName="auth_userrole" separator=";">
+			<column name="userroleid" type="numeric"/>
+			<column name="userid" type="numeric"/>
+			<column name="roleid" type="numeric"/>
+		</loadData>
+		
+		<createIndex tableName="auth_userrole" indexName="k01_userrole" unique="true">
+			<column name="userid"/>
+			<column name="roleid"/>
+		</createIndex>
+		
+		<comment>Creation of auth_userrole table</comment>
+	</changeSet>
+	
+</databaseChangeLog>
