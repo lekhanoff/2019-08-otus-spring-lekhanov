@@ -1,0 +1,9 @@
+spring:
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+  messages:
+    basename: i18n.bundle
+  shell:
+    interactive:
+      enabled: false          
