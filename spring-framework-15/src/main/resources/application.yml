@@ -2,5 +2,3 @@ spring:
   jackson:
     serialization:
       indent-output: true
-  messages:
-    basename: i18n.bundle
