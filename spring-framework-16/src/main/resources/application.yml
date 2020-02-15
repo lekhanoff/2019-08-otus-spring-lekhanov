@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password: 
+  jackson:
+    serialization:
+      indent-output: true
+  liquibase:
+    change-log: classpath:liquibase/rootChangeLog.xml
+  messages:
+    basename: i18n.bundle
+  data:
+    rest:
+      base-path: /datarest
+server:
+  error:
+    include-stacktrace: always
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always            
