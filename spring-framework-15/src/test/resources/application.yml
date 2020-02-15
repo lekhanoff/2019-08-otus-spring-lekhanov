@@ -1,0 +1,7 @@
+spring:
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+  shell:
+    interactive:
+      enabled: false          
