@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Список жанров</title>
+<style type="text/css">
+body {
+	padding: 50px;
+}
+
+.genres, .genres td {
+	border: 1px solid lightgray;
+	padding: 5px;
+}
+</style>
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+	<h1>Жанры</h1>
+	<table class="genres" border="1">
+		<thead>
+			<tr>
+				<th id="genres.column.id">ID</th>
+				<th id="genres.column.name">Наименование</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<button id="returnButton">Назад</button>
+	<script>
+    $(function () {
+        $.get('/v1/genres').done(function (genres) {
+            genres.forEach(function (genre) {
+                $('tbody').append(`
+                    <tr>
+                        <td>${genre.id}</td>
+                        <td>${genre.name}</td>
+                    </tr>
+                `)
+            });
+        })
+    });
+    $("#returnButton").click(function() {
+        var url = "/index.html";    
+        $(location).attr('href',url);    
+    });    
+	</script>
+</body>
+</html>
