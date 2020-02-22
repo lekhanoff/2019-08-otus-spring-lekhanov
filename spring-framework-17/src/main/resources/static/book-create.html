@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Добавление книги</title>
+<style type="text/css">
+body {
+	padding: 50px;
+}
+
+label {
+	display: inline-block;
+	width: 100px;
+}
+
+input:read-only {
+	background: lightgray;
+}
+
+input, select {
+	width: 400px;
+}
+
+.row {
+	margin-top: 10px;
+}
+</style>
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<form id="edit-form" action="book-list.html">
+		<h1>Информация о книге:</h1>
+		<div class="row">
+			<label for="title-input">Название:</label> 
+			<input id="title-input" name="title" type="text"/>
+		</div>
+		<div class="row">
+			<label for="author-input">Автор:</label>				
+			<select id = "author-input" name="author">
+			</select>	
+		</div>
+		<div class="row">
+			<label for="genre-input">Жанр:</label> 
+			<select id = "genre-input" name="genre">
+			</select>	
+		</div>
+		<div class="row">
+			<button type="submit">Добавить</button>
+			<button id="returnButton">Назад</button>
+		</div>
+	</form>
+	<script>
+    $(function () {
+        $.get('/v1/genres').done(function (genres) {
+            var $genreInput = $("#genre-input");
+            genres.forEach(function (genre) {
+                $genreInput.append($("<option />").val(genre.id).text(genre.name));
+            });
+        })
+    });
+    $(function () {
+        $.get('/v1/authors').done(function (authors) {
+            var $authorInput = $("#author-input");
+            authors.forEach(function (author) {
+                $authorInput.append($("<option />").val(author.id).text(author.lastname + ' ' + author.firstname + ' ' + author.middlename));
+            });
+        })
+    });
+	$("#edit-form").submit(function(event) {
+	    event.preventDefault();
+	    var data = {}
+		data["title"] = $("#title-input").val();
+	    var genre = {}
+	    genre["id"] = $("#genre-input option:selected").val();
+	    data["genre"] = genre;
+
+	    var author = {}
+	    author["id"] = $("#author-input option:selected").val();
+	    data["author"] = author;
+	    $.post({
+	         url : '/v1/books',
+	         contentType: "application/json",
+	         data: JSON.stringify(data),
+	         dataType: 'json',
+	         success: function (data) {
+	             var url = "/book-list.html";    
+	             $(location).attr('href',url);    
+	         }
+	      })	    
+	});
+    $("#returnButton").click(function() {
+	    event.preventDefault();
+        var url = "/book-list.html";    
+        $(location).attr('href',url);    
+    });    
+	</script>	
+</body>
+</html>
