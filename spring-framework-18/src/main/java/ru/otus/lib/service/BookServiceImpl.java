@@ -22,7 +22,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookDao;
 
-    @HystrixCommand(fallbackMethod = "getDefaultBook", commandKey = "books")
+    @HystrixCommand(fallbackMethod = "defaultSaveBook", commandKey = "books")
     @Override
     public BookDto saveBook(BookDto book) {
         Book savedBook = bookDao.save(Book.fromDto(book));
@@ -35,7 +35,7 @@ public class BookServiceImpl implements BookService {
         bookDao.deleteById(bookId);
     }
 
-    @HystrixCommand(fallbackMethod = "getDefaultBooks", commandKey = "books")
+    @HystrixCommand(fallbackMethod = "getDefaultBooksWithFilter", commandKey = "books")
     @Override
     public List<BookDto> getBooksByParams(String filter) {
         return bookDao.findByParams(filter).stream().map(BookDto::toDto).collect(Collectors.toList());
@@ -60,13 +60,19 @@ public class BookServiceImpl implements BookService {
                 .genre(GenreDto.builder().id(Long.valueOf(-1)).name("Mystery").build())
                 .build());
     }
+
+    public List<BookDto> getDefaultBooksWithFilter(String filter) {
+        return getDefaultBooks();
+    }
     
-    public BookDto getDefaultBook() {
+    public Optional<BookDto> getDefaultBook(Long bookId) {
+        return Optional.of(getDefaultBooks().get(0));
+    }
+
+    public BookDto defaultSaveBook(BookDto book) {
         return getDefaultBooks().get(0);
     }
-
+    
     public void defaultDeleteBook() {
     }
-
-
 }
