@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="#{book.delete.page.title}">Удаление книги</title>
+<style type="text/css">
+body {
+	padding: 50px;
+}
+
+label {
+	display: inline-block;
+	width: 100px;
+}
+
+input:read-only {
+	background: lightgray;
+}
+
+select: disabled {
+	background: lightgray;
+}
+
+input, select {
+	width: 400px;
+}
+
+.row {
+	margin-top: 10px;
+}
+</style>
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<form id="edit-form" action="book-list.html">
+		<h1>Информация о книге:</h1>
+		<div class="row">
+			<label for="id-input">ID:</label> 
+			<input id="id-input" name="id" type="text" readonly="readonly"/>
+		</div>
+		<div class="row">
+			<label for="title-input">Название:</label> 
+			<input id="title-input" name="title" type="text" readonly="readonly"/>
+		</div>
+		<div class="row">
+			<label for="author-input">Автор:</label>				
+			<select id = "author-input" name="author" disabled="disabled">
+			</select>	
+		</div>
+		<div class="row">
+			<label for="genre-input">Жанр:</label> 
+			<select id = "genre-input" name="genre" disabled="disabled">
+			</select>	
+		</div>
+		<div class="row">
+			<button type="submit">Удалить</button>
+			<button id="returnButton">Назад</button>
+		</div>
+	</form>
+	<script>
+    $(function () {
+        let searchParams = new URLSearchParams(window.location.search);
+        let id = searchParams.get('id');
+        $.get('/v1/books/' + id).done(function (book) {
+            var $genreInput = $("#genre-input");
+            var $authorInput = $("#author-input");
+            var $idInput = $("#id-input");
+            var $titleInput = $("#title-input");
+            $genreInput.append($("<option />").val(book.genre.id).text(book.genre.name));
+            $authorInput.append($("<option />").val(book.author.id).text(book.author.lastname + ' ' + book.author.firstname + ' ' + book.author.middlename));
+            $idInput.val(book.id);
+            $titleInput.val(book.title);
+        })
+    });
+	$("#edit-form").submit(function(event) {
+	    event.preventDefault();
+	    var id = $("#id-input").val();
+	    $.ajax({
+	        url: '/v1/books/' + id,
+	        type: 'DELETE',
+	        success: function(result) {
+	             var url = "/book-list.html";    
+	             $(location).attr('href',url);    
+	        }
+	    });	    
+	});	
+    $("#returnButton").click(function() {
+	    event.preventDefault();
+        var url = "/book-list.html";    
+        $(location).attr('href',url);    
+    });    
+	</script>	
+</body>
+</html>

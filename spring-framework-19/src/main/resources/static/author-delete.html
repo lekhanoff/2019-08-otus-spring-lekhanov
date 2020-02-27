@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="#{book.delete.page.title}">Удаление автора</title>
+<style type="text/css">
+body {
+	padding: 50px;
+}
+
+label {
+	display: inline-block;
+	width: 100px;
+}
+
+input:read-only {
+	background: lightgray;
+}
+
+select: disabled {
+	background: lightgray;
+}
+
+input, select {
+	width: 400px;
+}
+
+.row {
+	margin-top: 10px;
+}
+</style>
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<form id="edit-form" action="book-list.html">
+		<h1>Автор:</h1>
+		<div class="row">
+			<label for="id-input">ID:</label> 
+			<input id="id-input" name="id" type="text" readonly="readonly"/>
+		</div>
+		<div class="row">
+			<label for="lastname-input">Фамилия:</label> 
+			<input id="lastname-input" name="lastname" type="text" readonly="readonly"/>
+		</div>
+		<div class="row">
+			<label for="firstname-input">Фамилия:</label> 
+			<input id="firstname-input" name="firstname" type="text" readonly="readonly"/>
+		</div>
+		<div class="row">
+			<label for="middlename-input">Отчество:</label> 
+			<input id="middlename-input" name="middlename" type="text" readonly="readonly"/>
+		</div>
+		<div class="row">
+			<button type="submit">Удалить</button>
+			<button id="returnButton">Назад</button>
+		</div>
+	</form>
+	<script>
+    $(function () {
+        let searchParams = new URLSearchParams(window.location.search);
+        let id = searchParams.get('id');
+        $.get('/v1/authors/' + id).done(function (author) {
+            var $idInput = $("#id-input");
+            var $lastnameInput = $("#lastname-input");
+            var $firstnameInput = $("#firstname-input");
+            var $middlenameInput = $("#middlename-input");
+            $idInput.val(author.id);
+            $lastnameInput.val(author.lastname);
+            $firstnameInput.val(author.firstname);
+            $middlenameInput.val(author.middlename);
+        })
+    });
+	$("#edit-form").submit(function(event) {
+	    event.preventDefault();
+	    var id = $("#id-input").val();
+	    $.ajax({
+	        url: '/v1/authors/' + id,
+	        type: 'DELETE',
+	        success: function(result) {
+	             var url = "/author-list.html";    
+	             $(location).attr('href',url);    
+	        }
+	    });	    
+	});	
+    $("#returnButton").click(function() {
+	    event.preventDefault();
+        var url = "/author-list.html";    
+        $(location).attr('href',url);    
+    });    
+	</script>	
+</body>
+</html>

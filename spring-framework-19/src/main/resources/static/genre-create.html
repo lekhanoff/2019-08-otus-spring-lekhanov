@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Добавление жанра</title>
+<style type="text/css">
+body {
+	padding: 50px;
+}
+
+label {
+	display: inline-block;
+	width: 100px;
+}
+
+input:read-only {
+	background: lightgray;
+}
+
+input, select {
+	width: 400px;
+}
+
+.row {
+	margin-top: 10px;
+}
+</style>
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<form id="edit-form" action="genre-list.html">
+		<h1>Жанр:</h1>
+		<div class="row">
+			<label for="name-input">Название:</label> 
+			<input id="name-input" name="name" type="text"/>
+		</div>
+		<div class="row">
+			<button type="submit">Добавить</button>
+			<button id="returnButton">Назад</button>
+		</div>
+	</form>
+	<script>
+	$("#edit-form").submit(function(event) {
+	    event.preventDefault();
+	    var data = {}
+		data["name"] = $("#name-input").val();
+	    $.post({
+	         url : '/v1/genres',
+	         contentType: "application/json",
+	         data: JSON.stringify(data),
+	         dataType: 'json',
+	         success: function (data) {
+	             var url = "/genre-list.html";    
+	             $(location).attr('href',url);    
+	         }
+	      })	    
+	});
+    $("#returnButton").click(function() {
+	    event.preventDefault();
+        var url = "/genre-list.html";    
+        $(location).attr('href',url);    
+    });    
+	</script>	
+</body>
+</html>
