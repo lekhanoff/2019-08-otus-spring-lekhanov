@@ -4,8 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,9 +30,13 @@ public class BookCompilationItem {
     @Column(name = "book_compilation_item_id")
     private Long id;
 
-    @Column(name = "book_compilation_id")
-    private Long compilationId;
-
-    @Column(name = "book_id")
-    private Long bookId;
+    @JsonManagedReference("compilation")
+    @ManyToOne
+    @JoinColumn(name = "book_compilation_id")
+    private BookCompilation bookCompilation;
+    
+    @JsonManagedReference("compilationitem")
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
 }

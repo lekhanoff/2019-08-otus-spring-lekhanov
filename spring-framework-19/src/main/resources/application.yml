@@ -25,3 +25,11 @@ spring:
 server:
   error:
     include-stacktrace: always
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always    

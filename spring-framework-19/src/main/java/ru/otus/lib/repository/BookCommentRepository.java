@@ -7,6 +7,6 @@ import io.swagger.annotations.Api;
 import ru.otus.lib.domain.BookComment;
 
 @Api(tags = "book-comments-controller")
-@RepositoryRestResource(path = "/book-comments")
+@RepositoryRestResource(path = "/v1/book-comments")
 public interface BookCommentRepository extends JpaRepository<BookComment, Long>{
 }

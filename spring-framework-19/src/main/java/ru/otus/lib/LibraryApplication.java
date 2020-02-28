@@ -1,7 +1,5 @@
 package ru.otus.lib;
 
-import java.io.IOException;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
@@ -10,7 +8,7 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 @EnableHystrix
 public class LibraryApplication {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
         SpringApplication.run(LibraryApplication.class, args);
 	}
 }
