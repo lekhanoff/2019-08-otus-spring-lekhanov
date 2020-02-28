@@ -3,8 +3,8 @@ package ru.otus.lib.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +28,8 @@ public class Role {
 
     @Id
     @Column(name = "roleid")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "auth_role_roleid_seq")
+    @SequenceGenerator(name = "auth_role_roleid_seq", sequenceName = "auth_role_roleid_seq", allocationSize = 1)
     private Long roleId;
     
     @Column(name = "sysname")

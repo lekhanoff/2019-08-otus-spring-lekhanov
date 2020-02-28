@@ -3,10 +3,10 @@ package ru.otus.lib.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -27,7 +27,8 @@ public class Book {
 
     @Id
     @Column(name = "book_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "book_book_id_seq")
+    @SequenceGenerator(name = "book_book_id_seq", sequenceName = "book_book_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "title")
