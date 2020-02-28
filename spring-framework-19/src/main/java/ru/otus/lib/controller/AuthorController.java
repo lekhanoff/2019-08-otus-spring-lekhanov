@@ -41,7 +41,7 @@ public class AuthorController {
     @PutMapping(value = "/v1/authors/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthorDto> modifyAuthor(@PathVariable(name = "id") Long id, @RequestBody AuthorDto author) {
         author.setId(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(authorService.saveAuthor(author));
+        return ResponseEntity.status(HttpStatus.OK).body(authorService.saveAuthor(author));
     }
 
     @DeleteMapping("/v1/authors/{id}")

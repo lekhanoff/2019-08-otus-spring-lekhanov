@@ -18,7 +18,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import ru.otus.lib.controller.dto.AuthorDto;
 import ru.otus.lib.controller.dto.BookDto;
+import ru.otus.lib.controller.dto.GenreDto;
 import ru.otus.lib.domain.Author;
 import ru.otus.lib.domain.Book;
 import ru.otus.lib.domain.Genre;
@@ -58,7 +60,7 @@ public class BookServiceTest {
     
     @DisplayName("Book save")
     @Test
-    void testCreateBook() {
+    public void testCreateBook() {
         when(bookRepo.save(warAndPeace)).thenReturn(warAndPeace);
         BookDto book = bookService.saveBook(BookDto.toDto(warAndPeace));
         assertThat(book).isEqualTo(BookDto.toDto(warAndPeace));
@@ -67,14 +69,14 @@ public class BookServiceTest {
 
     @DisplayName("Book delete")
     @Test
-    void testDeleteBook() {
+    public void testDeleteBook() {
         bookService.deleteBook(warAndPeace.getId());
         assertThat(Mockito.mockingDetails(bookRepo).getInvocations().size()).isEqualTo(1);
     }
 
     @DisplayName("Book find by params")
     @Test
-    void testGetBooksByParams() {
+    public void testGetBooksByParams() {
         when(bookRepo.findByParams("filter")).thenReturn(Arrays.asList(warAndPeace, annaKarenina));
         List<BookDto> books = bookService.getBooksByParams("filter");
         assertThat(books).hasSize(2).containsExactly(BookDto.toDto(warAndPeace), BookDto.toDto(annaKarenina));
@@ -83,7 +85,7 @@ public class BookServiceTest {
 
     @DisplayName("Book find all")
     @Test
-    void testGetAllBooks() {
+    public void testGetAllBooks() {
         when(bookRepo.findAll()).thenReturn(Arrays.asList(warAndPeace, annaKarenina));
         List<BookDto> books = bookService.getAllBooks();
         assertThat(books).hasSize(2).containsExactly(BookDto.toDto(warAndPeace), BookDto.toDto(annaKarenina));
@@ -92,10 +94,47 @@ public class BookServiceTest {
 
     @DisplayName("Book find by id")
     @Test
-    void testGetBookById() {
+    public void testGetBookById() {
         when(bookRepo.findById(warAndPeace.getId())).thenReturn(Optional.of(warAndPeace));
         Optional<BookDto> book = bookService.getBookById(warAndPeace.getId());
         assertThat(book).isEqualTo(Optional.of(BookDto.toDto(warAndPeace)));
         assertThat(Mockito.mockingDetails(bookRepo).getInvocations().size()).isEqualTo(1);
     }
+    
+    @DisplayName("Get books count by genreId")
+    @Test
+    public void testGetBooksCountByGenreId() {
+        when(bookRepo.countByGenreId(russianClassic.getId())).thenReturn(1);
+        assertThat(bookService.getCountByGenreId(russianClassic.getId())).isEqualTo(1);
+    }
+    
+    @DisplayName("Get books count by authorId")
+    @Test
+    public void testGetBooksCountByAuthorId() {
+        when(bookRepo.countByAuthorId(authorLeoTolstoy.getId())).thenReturn(1);
+        assertThat(bookService.getCountByAuthorId(authorLeoTolstoy.getId())).isEqualTo(1);
+    }
+    
+    @DisplayName("Histrix methods test")
+    @Test
+    public void histrixMethodsTest() {
+        BookDto book = BookDto.builder()
+                .id(Long.valueOf(-1))
+                .author(AuthorDto.builder()
+                        .id(Long.valueOf(-1))
+                        .lastname("Doe")
+                        .firstname("John")
+                        .middlename("Jr.")
+                        .build())
+                .title("No name book")
+                .genre(GenreDto.builder().id(Long.valueOf(-1)).name("Mystery").build())
+                .build();
+
+        assertThat(bookService.getDefaultBooks()).hasSize(1).containsExactly(book);
+        assertThat(bookService.getDefaultBooksWithFilter("")).hasSize(1).containsExactly(book);
+        assertThat(bookService.getDefaultBook(Long.valueOf(1)).orElse(null)).isEqualTo(book);
+        assertThat(bookService.defaultSaveBook(BookDto.builder().build())).isEqualTo(book);
+        bookService.defaultDeleteBook(Long.valueOf(1));
+    }
+
 }

@@ -1,8 +1,10 @@
 package ru.otus.lib.controller;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
@@ -15,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -42,6 +45,7 @@ public class GenreControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")    
     public void testFindAllGenres() throws Exception {
         mockMvc.perform(get("/v1/genres"))
                 .andExpect(status().isOk())
@@ -50,6 +54,7 @@ public class GenreControllerTest {
     }
     
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")    
     public void testSaveGenre() throws Exception {
         when(service.saveGenre(russianClassic)).thenReturn(russianClassic);
         mockMvc.perform(post("/v1/genres").content(new ObjectMapper().writeValueAsBytes(russianClassic))
@@ -60,6 +65,27 @@ public class GenreControllerTest {
     }
     
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")    
+    public void testModifyGenre() throws Exception {
+        when(service.saveGenre(russianClassic)).thenReturn(russianClassic);
+        mockMvc.perform(put("/v1/genres/" + russianClassic.getId()).content(new ObjectMapper().writeValueAsBytes(russianClassic))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(russianClassic.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(russianClassic.getName()));
+    }
+    
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")    
+    public void testDeleteGenre() throws Exception {
+        when(service.saveGenre(russianClassic)).thenReturn(russianClassic);
+        mockMvc.perform(delete("/v1/genres/" + russianClassic.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+    
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")    
     public void testGetGenreById() throws Exception {
         Long genreId = Long.valueOf(1000);
         when(service.getGenreById(genreId)).thenReturn(Optional.of(russianClassic));
@@ -68,6 +94,4 @@ public class GenreControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(russianClassic.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(russianClassic.getName()));
     }
-    
-
 }

@@ -52,6 +52,16 @@ public class BookServiceImpl implements BookService {
     public Optional<BookDto> getBookById(Long bookId) {
         return Optional.ofNullable(BookDto.toDto(bookDao.findById(bookId).orElse(null)));
     }
+    
+    @Override
+    public int getCountByGenreId(Long genreId) {
+        return bookDao.countByGenreId(genreId);
+    }
+
+    @Override
+    public int getCountByAuthorId(Long authorId) {
+        return bookDao.countByAuthorId(authorId);
+    }
 
     public List<BookDto> getDefaultBooks() {
         return Arrays.asList(BookDto.builder().id(Long.valueOf(-1))
@@ -73,6 +83,7 @@ public class BookServiceImpl implements BookService {
         return getDefaultBooks().get(0);
     }
     
-    public void defaultDeleteBook() {
+    public void defaultDeleteBook(Long bookId) {
     }
+
 }

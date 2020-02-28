@@ -15,6 +15,10 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 
     List<Book> findByGenreId(Long genreId);
     
+    int countByAuthorId(Long authorId);
+    
+    int countByGenreId(Long genreId);
+    
     @Query("Select b from Book b where lower(b.title) like lower(concat('%', :filter, '%')) " + 
             "or lower(b.author.lastname) like lower(concat('%', :filter, '%')) "+ 
             "or lower(b.author.firstname) like lower(concat('%', :filter, '%')) " + 

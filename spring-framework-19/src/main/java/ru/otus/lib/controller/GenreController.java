@@ -41,7 +41,7 @@ public class GenreController {
     @PutMapping(value = "/v1/genres/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GenreDto> modifyGenre(@PathVariable(name = "id") Long id, @RequestBody GenreDto genre) {
         genre.setId(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(genreService.saveGenre(genre));
+        return ResponseEntity.status(HttpStatus.OK).body(genreService.saveGenre(genre));
     }
 
     @DeleteMapping("/v1/genres/{id}")

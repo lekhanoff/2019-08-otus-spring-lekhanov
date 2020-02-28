@@ -1,8 +1,10 @@
 package ru.otus.lib.controller;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
@@ -14,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -57,6 +60,7 @@ public class BookControllerTest {
             .build();
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")    
     public void testSaveBook() throws Exception {
         when(service.saveBook(warAndPeace)).thenReturn(warAndPeace);
         mockMvc.perform(post("/v1/books").content(new ObjectMapper().writeValueAsBytes(warAndPeace))
@@ -66,10 +70,32 @@ public class BookControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title").value(warAndPeace.getTitle()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.author").value(warAndPeace.getAuthor()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.genre").value(warAndPeace.getGenre()));
-
     }
+    
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")    
+    public void testModifyBook() throws Exception {
+        when(service.saveBook(warAndPeace)).thenReturn(warAndPeace);
+        mockMvc.perform(put("/v1/books/" + warAndPeace.getId()).content(new ObjectMapper().writeValueAsBytes(warAndPeace))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(warAndPeace.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value(warAndPeace.getTitle()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.author").value(warAndPeace.getAuthor()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.genre").value(warAndPeace.getGenre()));
+    }    
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")    
+    public void testDeleteBook() throws Exception {
+        when(service.saveBook(warAndPeace)).thenReturn(warAndPeace);
+        mockMvc.perform(delete("/v1/books/" + warAndPeace.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }    
+    
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")    
     public void testGetAllBooks() throws Exception {
         when(service.getAllBooks()).thenReturn(Arrays.asList(warAndPeace, annaKarenina));
         mockMvc.perform(get("/v1/books"))
@@ -79,6 +105,7 @@ public class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")    
     public void testGetBookById() throws Exception {
         Long bookId = Long.valueOf(1000);
         when(service.getBookById(bookId)).thenReturn(Optional.of(warAndPeace));

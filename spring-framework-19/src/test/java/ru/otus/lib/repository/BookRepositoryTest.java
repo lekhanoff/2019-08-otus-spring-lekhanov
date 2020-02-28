@@ -1,4 +1,4 @@
-package ru.otus.lib.dao;
+package ru.otus.lib.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -135,4 +135,16 @@ public class BookRepositoryTest {
         assertThat(bookList).hasSize(1).containsExactly(annaKarenina);
     }
 
+    @DisplayName("Get books count by genre id")
+    @Test
+    void testGetBooksCountByGenreId() {
+        assertThat(bookRepo.countByGenreId(russianClassic.getId())).isEqualTo(2);
+    }
+
+    @DisplayName("Get books count by author id")
+    @Test
+    void testGetBooksCountByAuthorId() {
+        assertThat(bookRepo.countByAuthorId(authorLeoTolstoy.getId())).isEqualTo(2);
+    }
+    
 }

@@ -41,7 +41,7 @@ public class BookController {
     @PutMapping(value = "/v1/books/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BookDto> modifyBook(@PathVariable(name = "id") Long id, @RequestBody BookDto book) {
         book.setId(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.saveBook(book));
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.saveBook(book));
     }
 
     @DeleteMapping("/v1/books/{id}")

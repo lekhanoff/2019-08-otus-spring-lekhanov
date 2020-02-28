@@ -16,4 +16,8 @@ public interface BookService {
     List<BookDto> getAllBooks();
 
     List<BookDto> getBooksByParams(String filter);
+    
+    int getCountByGenreId(Long genreId);
+    
+    int getCountByAuthorId(Long authorId);
 }

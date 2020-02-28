@@ -30,6 +30,9 @@ public class AuthorServiceTest {
     @Mock
     private AuthorRepository authorRepo;
 
+    @Mock
+    private BookService bookService;
+
     private AuthorServiceImpl authorService;
     
     private Author ivanov = Author.builder().id(Long.valueOf(1000)).lastname("Ivanov").firstname("Ivan").middlename("Ivanovich").build();
@@ -37,8 +40,9 @@ public class AuthorServiceTest {
 
     @BeforeEach
     public void init() throws IOException {
-        authorService = new AuthorServiceImpl(authorRepo);
+        authorService = new AuthorServiceImpl(authorRepo, bookService);
         when(authorRepo.findAll()).thenReturn(Arrays.<Author>asList(ivanov, petrov));
+        when(bookService.getCountByAuthorId(ivanov.getId())).thenReturn(0);
     }
     
     @DisplayName("Author find all")
@@ -51,7 +55,7 @@ public class AuthorServiceTest {
     
     @DisplayName("Author save")
     @Test
-    void testCreateAuthor() {
+    public void testCreateAuthor() {
         when(authorRepo.save(ivanov)).thenReturn(ivanov);
         AuthorDto author = authorService.saveAuthor(AuthorDto.toDto(ivanov));
         assertThat(author).isEqualTo(AuthorDto.toDto(ivanov));
@@ -60,14 +64,14 @@ public class AuthorServiceTest {
 
     @DisplayName("Author delete")
     @Test
-    void testDeleteAuthor() {
+    public void testDeleteAuthor() {
         authorService.deleteAuthor(ivanov.getId());
         assertThat(Mockito.mockingDetails(authorRepo).getInvocations().size()).isEqualTo(1);
     }
 
     @DisplayName("Author find by params")
     @Test
-    void testGetAuthorsByParams() {
+    public void testGetAuthorsByParams() {
         when(authorRepo.findByParams("filter")).thenReturn(Arrays.asList(ivanov, petrov));
         List<AuthorDto> authors = authorService.getAuthorsByParams("filter");
         assertThat(authors).hasSize(2).containsExactly(AuthorDto.toDto(ivanov), AuthorDto.toDto(petrov));
@@ -76,11 +80,29 @@ public class AuthorServiceTest {
 
     @DisplayName("Author find by id")
     @Test
-    void testGetAuthorById() {
+    public void testGetAuthorById() {
         when(authorRepo.findById(ivanov.getId())).thenReturn(Optional.of(ivanov));
         Optional<AuthorDto> author = authorService.getAuthorById(ivanov.getId());
         assertThat(author).isEqualTo(Optional.of(AuthorDto.toDto(ivanov)));
         assertThat(Mockito.mockingDetails(authorRepo).getInvocations().size()).isEqualTo(1);
     }
     
+    @DisplayName("Histrix methods test")
+    @Test
+    public void histrixMethodsTest() {
+        AuthorDto author = AuthorDto.builder()
+                .id(Long.valueOf(-1))
+                .lastname("Doe")
+                .firstname("John")
+                .middlename("Jr.")
+                .build();
+        
+        assertThat(authorService.getDefaultAuthors()).hasSize(1)
+                .containsExactly(author);
+        assertThat(authorService.getDefaultAuthor(Long.valueOf(1)).orElse(null)).isEqualTo(
+                author);
+        assertThat(authorService.defaultSaveAuthor(AuthorDto.builder().build())).isEqualTo(
+                author);
+        authorService.getDefaultDelete(Long.valueOf(1));
+    }
 }

@@ -19,6 +19,7 @@ import ru.otus.lib.repository.GenreRepository;
 public class GenreServiceImpl implements GenreService {
 
     private final GenreRepository genreDao;
+    private final BookService bookService;
 
     @HystrixCommand(fallbackMethod = "getDefaultGenres", commandKey = "genres")
     @Override
@@ -36,7 +37,9 @@ public class GenreServiceImpl implements GenreService {
     @HystrixCommand(fallbackMethod = "defaultDeleteGenre", commandKey = "genres")
     @Override
     public void deleteGenre(Long genreId) {
-        genreDao.deleteById(genreId);
+        if(bookService.getCountByGenreId(genreId) == 0) {
+            genreDao.deleteById(genreId);
+        }
     }
 
     @HystrixCommand(fallbackMethod = "getDefaultGenre", commandKey = "genres")

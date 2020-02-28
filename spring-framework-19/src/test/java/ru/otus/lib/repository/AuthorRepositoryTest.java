@@ -1,4 +1,4 @@
-package ru.otus.lib.dao;
+package ru.otus.lib.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

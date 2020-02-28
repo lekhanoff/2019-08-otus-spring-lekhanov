@@ -36,6 +36,7 @@
 						<exclude>**/config/**/*</exclude>
 						<exclude>**/domain/**/*</exclude>
 						<exclude>**/exception/**/*</exclude>
+						<exclude>**/dto/**/*</exclude>
 					</excludes>
 				</configuration>
 				<executions>

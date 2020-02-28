@@ -20,6 +20,8 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorDao;
     
+    private final BookService bookService;
+    
     @HystrixCommand(fallbackMethod = "getDefaultAuthors", commandKey = "authors")
     @Override
     public List<AuthorDto> getAllAuthors() {
@@ -36,7 +38,9 @@ public class AuthorServiceImpl implements AuthorService {
     @HystrixCommand(fallbackMethod = "getDefaultDelete", commandKey = "authors")
     @Override
     public void deleteAuthor(Long authorId) {
-        authorDao.deleteById(authorId);
+        if(bookService.getCountByAuthorId(authorId) == 0) {
+            authorDao.deleteById(authorId);
+        }
     }
 
     @HystrixCommand(fallbackMethod = "getDefaultAuthor", commandKey = "authors")
