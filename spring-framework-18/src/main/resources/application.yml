@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: false
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true    
+  jackson:
+    serialization:
+      indent-output: true
+  liquibase:
+    change-log: classpath:liquibase/rootChangeLog.xml
+  messages:
+    basename: i18n.bundle
+server:
+  error:
+    include-stacktrace: always
