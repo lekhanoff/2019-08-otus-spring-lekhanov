@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Список авторов</title>
+ <style type="text/css">
+body {
+	padding: 50px;
+	}
+.authors, .authors td {
+	border: 1px solid lightgray;
+	padding: 5px;
+}
+input[type=text] {
+	width: 30%;
+}        
+    </style>
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+	<h1>Авторы</h1>
+	<div class="container">
+		<div id="search">
+			<input id="authorSearchInput" type="text" />
+		</div>
+		<div id="table">
+			<table class="authors" border="1">
+				<thead>
+					<tr>
+						<th id="author.column.id">ID</th>
+						<th id="author.column.lastname">Фамилия</th>
+						<th id="author.column.firstname">Имя</th>
+						<th id="author.column.middlename">Отчество</th>
+					</tr>
+				</thead>
+				<tbody id="authorsTableBody">
+				</tbody>
+			</table>
+		</div>
+		<div>
+			<button id="returnButton">Назад</button>
+		</div>
+	</div>
+	<script>
+    $(function () {
+        $.get('/v1/authors').done(function (authors) {
+            authors.forEach(function (author) {
+                $('tbody').append(`
+                    <tr>
+                        <td>${author.id}</td>
+                        <td>${author.lastname}</td>
+                        <td>${author.firstname}</td>
+                        <td>${author.middlename}</td>
+                        <td><a href="/author-create.html">Добавить</a></td>
+                        <td><a href="/author-edit.html?id=${author.id}">Изменить</a></td>
+                        <td><a href="/author-delete.html?id=${author.id}">Удалить</a></td>
+                    </tr>
+                `)
+            });
+        })
+    });
+    $(document).ready(function(){
+        $("#authorSearchInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#authorsTableBody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+    $("#returnButton").click(function() {
+        var url = "/index.html";    
+        $(location).attr('href',url);    
+    });    
+	</script>
+</body>
+</html>

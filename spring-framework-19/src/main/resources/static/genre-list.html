@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Список жанров</title>
+<style type="text/css">
+body {
+	padding: 50px;
+}
+
+.genres, .genres td {
+	border: 1px solid lightgray;
+	padding: 5px;
+}
+input[type=text] {
+	width: 30%;
+}
+</style>
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+	<h1>Жанры</h1>
+	<div class="container">
+		<div id="search">
+			<input id="genreSearchInput" type="text" />
+		</div>
+		<div id="table">
+			<table class="genres" border="1">
+				<thead>
+					<tr>
+						<th id="genres.column.id">ID</th>
+						<th id="genres.column.name">Наименование</th>
+					</tr>
+				</thead>
+				<tbody id="genresTableBody">
+				</tbody>
+			</table>
+		</div>
+		<div>
+			<button id="returnButton">Назад</button>
+		</div>
+	</div>
+	<script>
+    $(function () {
+        $.get('/v1/genres').done(function (genres) {
+            genres.forEach(function (genre) {
+                $('tbody').append(`
+                    <tr>
+                        <td>${genre.id}</td>
+                        <td>${genre.name}</td>
+                        <td><a href="/genre-create.html">Добавить</a></td>
+                        <td><a href="/genre-edit.html?id=${genre.id}">Изменить</a></td>
+                        <td><a href="/genre-delete.html?id=${genre.id}">Удалить</a></td>
+                    </tr>
+                `)
+            });
+        })
+    });
+    $(document).ready(function(){
+        $("#genreSearchInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#genresTableBody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+    $("#returnButton").click(function() {
+        var url = "/index.html";    
+        $(location).attr('href',url);    
+    });    
+	</script>
+</body>
+</html>

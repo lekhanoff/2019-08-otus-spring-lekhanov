@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	
+	<changeSet id="1.0.2.01-createBookCommentTableSequence" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<sequenceExists sequenceName="book_comment_book_comment_id_seq"/>
+			</not>
+		</preConditions>
+		
+		<createSequence sequenceName="book_comment_book_comment_id_seq" incrementBy="1" startValue="1000"/>
+
+		<comment>Creation of book_comment_book_comment_id_seq</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.2.02-createBookCommentTable" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="book_comment"/>
+			</not>
+		</preConditions>
+		
+		<createTable tableName="book_comment">
+			<column name="book_comment_id" type="NUMERIC(19,0)" autoIncrement="true" defaultValueSequenceNext="book_comment_book_comment_id_seq">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="book_id" type="NUMERIC(19,0)">
+				<constraints nullable="false" />
+			</column>
+			<column name="user_id" type="NUMERIC(19,0)">
+				<constraints nullable="false" />
+			</column>
+			<column name="user_comment" type="VARCHAR(512)">
+				<constraints nullable="true" />
+			</column>
+			<column name="comment_date" type="TIMESTAMP">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+		
+		<comment>Creation of book_comment table</comment>
+	</changeSet>
+
+	<changeSet id="1.0.2.03-createBookCommentTableIndexes" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<indexExists tableName="book_comment" indexName="k01_book_comment"/>
+			</not>
+		</preConditions>
+		
+		<createIndex tableName="book_comment" indexName="k01_book_comment" unique="false">
+			<column name="book_id"/>
+		</createIndex>
+		<createIndex tableName="book_comment" indexName="k02_book_comment" unique="false">
+			<column name="user_id"/>
+		</createIndex>
+		
+		<comment>Creation of book_comment indexes</comment>
+	</changeSet>
+
+	<changeSet id="1.0.2.04-createBookRatingTableSequence" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<sequenceExists sequenceName="book_rating_book_rating_id_seq"/>
+			</not>
+		</preConditions>
+		
+		<createSequence sequenceName="book_rating_book_rating_id_seq" incrementBy="1" startValue="1000"/>
+
+		<comment>Creation of book_rating_book_rating_id_seq</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.2.05-createBookRatingCommentTable" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="book_rating"/>
+			</not>
+		</preConditions>
+		
+		<createTable tableName="book_rating">
+			<column name="book_rating_id" type="NUMERIC(19,0)" autoIncrement="true" defaultValueSequenceNext="book_rating_book_rating_id_seq">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="book_id" type="NUMERIC(19,0)">
+				<constraints nullable="false" />
+			</column>
+			<column name="user_id" type="NUMERIC(19,0)">
+				<constraints nullable="false" />
+			</column>
+			<column name="rating" type="INTEGER">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+		<comment>Creation of book_comment table</comment>
+	</changeSet>
+
+	<changeSet id="1.0.2.06-createBookRatingTableIndexes" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<indexExists tableName="book_rating" indexName="k01_book_rating"/>
+			</not>
+		</preConditions>
+		
+		<createIndex tableName="book_rating" indexName="k01_book_rating" unique="true">
+			<column name="book_id"/>
+			<column name="user_id"/>
+		</createIndex>
+		
+		<comment>Creation of book_rating indexes</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.2.07-createBookCompilationTableSequence" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<sequenceExists sequenceName="book_compilation_book_compilation_id_seq"/>
+			</not>
+		</preConditions>
+		
+		<createSequence sequenceName="book_compilation_book_compilation_id_seq" incrementBy="1" startValue="1000"/>
+
+		<comment>Creation of book_compilation_book_compilation_id_seq</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.2.08-createBookCompilationTable" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="book_compilation"/>
+			</not>
+		</preConditions>
+		
+		<createTable tableName="book_compilation">
+			<column name="book_compilation_id" type="NUMERIC(19,0)" autoIncrement="true" defaultValueSequenceNext="book_compilation_book_compilation_id_seq">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="compilation_name" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+		<comment>Creation of book_compilation table</comment>
+	</changeSet>
+
+	<changeSet id="1.0.2.09-createBookCompilationTableIndexes" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<indexExists tableName="book_compilation" indexName="k01_book_compilation"/>
+			</not>
+		</preConditions>
+		
+		<createIndex tableName="book_compilation" indexName="k01_book_compilation" unique="true">
+			<column name="compilation_name"/>
+		</createIndex>
+		
+		<comment>Creation of book_compilation indexes</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.2.10-createBookCompilationItemTableSequence" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<sequenceExists sequenceName="book_compilation_item_id_seq"/>
+			</not>
+		</preConditions>
+		
+		<createSequence sequenceName="book_compilation_item_id_seq" incrementBy="1" startValue="1000"/>
+
+		<comment>Creation of book_compilation_item_id_seq</comment>
+	</changeSet>
+	
+	<changeSet id="1.0.2.08-createBookCompilationItemTable" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="book_compilation_item"/>
+			</not>
+		</preConditions>
+		
+		<createTable tableName="book_compilation_item">
+			<column name="book_compilation_item_id" type="NUMERIC(19,0)" autoIncrement="true" defaultValueSequenceNext="book_compilation_item_id_seq">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="book_compilation_id" type="NUMERIC(19,0)">
+				<constraints nullable="false" />
+			</column>
+			<column name="book_id" type="NUMERIC(19,0)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		
+		<comment>Creation of book_compilation_item table</comment>
+	</changeSet>
+
+	<changeSet id="1.0.2.09-createBookCompilationItemTableIndexes" author="dlekhanov" context="update" runInTransaction="false">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<indexExists tableName="book_compilation_item" indexName="k01_book_compilation_item"/>
+			</not>
+		</preConditions>
+		
+		<createIndex tableName="book_compilation_item" indexName="k01_book_compilation_item" unique="true">
+			<column name="book_compilation_id"/>
+			<column name="book_id"/>
+		</createIndex>
+		
+		<comment>Creation of book_compilation_item indexes</comment>
+	</changeSet>
+
+</databaseChangeLog>
